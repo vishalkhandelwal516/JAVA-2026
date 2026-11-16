@@ -1,29 +1,41 @@
-class Solution {
-    public boolean isPalindrome(ListNode head) {
+class Solution 
+{
+    public boolean isPalindrome(ListNode head) 
+    {   
         if (head == null || head.next == null) return true;
 
-        // Find the middle with slow and fast pointers
+        // finding middle node
         ListNode slow = head, fast = head;
-        while (fast != null && fast.next != null) {
+        while (fast != null && fast.next != null) 
+        {
             slow = slow.next;
             fast = fast.next.next;
         }
 
-        // Reverse the second half in place
-        ListNode prev = null;
-        while (slow != null) {
-            ListNode next = slow.next;
-            slow.next = prev;
-            prev = slow;
-            slow = next;
-        }
+        // reversing second half
 
-        // Compare the first half with the reversed second half
-        ListNode left = head, right = prev;
-        while (right != null) {
-            if (left.val != right.val) return false;
-            left = left.next;
-            right = right.next;
+        ListNode prev, nextNode, temp;
+        prev = null;
+        temp = slow;
+        while (temp!=null)
+        {
+            nextNode = temp.next;
+            temp.next= prev;
+
+            prev = temp;
+            temp = nextNode;
+        }
+        slow = prev;
+
+        // checking
+        while(head!=null && slow!=null)
+        {
+            if (head.val!=slow.val)
+            {
+                return false;
+            }
+            head = head.next;
+            slow = slow.next;
         }
         return true;
     }
